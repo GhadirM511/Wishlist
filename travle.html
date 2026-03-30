@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Story - Ghadir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; margin: 0 !important; padding: 0 !important; }
+        body, html { height: 100%; width: 100%; font-family: 'Roboto', sans-serif; overflow: hidden; background-color: #e8e6cb; }
+   
+        .navbar {
+            background-color: #d2b48c !important;
+            padding: 15px 50px !important;
+            display: flex;
+            justify-content: flex-start !important;
+            align-items: center;
+            position: fixed;
+            top: 0; left: 0; width: 100%; 
+            z-index: 10000;
+        }
+        .nav-links { display: flex; gap: 35px; list-style: none; }
+        .nav-links a { text-decoration: none; color: #213315 !important; font-family: 'Playfair Display', serif !important; font-weight: 800; font-size: 18px !important; text-transform: uppercase; }
+
+        .travel-split-container { display: flex; height: 100vh; width: 100%; padding-top: 60px; }
+        .left-panel { flex: 0 0 45%; background-image: url('backg.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px !important; color: #e8e6cb; text-shadow: 2px 2px 5px rgba(0,0,0,0.3); }
+        .right-panel { flex: 0 0 55%; background-color: #e8e6cb; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px !important; position: relative; }
+        .left-panel h1 { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900; margin-bottom: 20px !important; }
+        
+        .step-content { display: none; flex-direction: column; align-items: center; width: 100%; max-width: 500px; animation: fadeIn 0.5s ease; }
+        .step-content.active { display: flex; }
+
+        .question-capsule {
+            background-color: #1a2612; color: #e8e6cb; border-radius: 50px; padding: 18px 40px !important; 
+            text-align: center; margin-bottom: 35px !important; font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; width: 100%;
+        }
+
+        .choices-row { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .vibe-btn { padding: 14px 28px !important; border-radius: 12px; border: 2.5px solid #8da16c !important; background: transparent; color: #1a2612; font-weight: 900; cursor: pointer; transition: 0.3s; font-size: 14px; }
+        .vibe-btn:hover { background-color: #8da16c !important; color: white !important; }
+
+        .main-input { width: 100%; padding: 22px !important; border-radius: 18px; border: 2.5px solid #8da16c !important; background: white; font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; outline: none; text-align: center; }
+
+        .btn-create { position: absolute; bottom: 60px; right: 60px; background-color: #1a2612 !important; color: #e8e6cb !important; padding: 18px 45px !important; border-radius: 50px; border: none; font-size: 17px; font-weight: 900; cursor: pointer; }
+
+        .result-box { display: none; background-color: #1a2612; color: #e8e6cb; border-radius: 35px; padding: 50px !important; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.25); max-width: 600px; }
+        .result-box.show { display: block; }
+        .result-box h2 { font-family: 'Playfair Display', serif; font-size: 26px; color: #8da16c; margin-bottom: 15px !important; }
+        .result-box p { font-size: 18px; line-height: 1.6; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="abt.html">About us</a></li>
+            <li><a href="vibe.html">Add your wishlist</a></li>
+            <li><a href="ins.html">Get Inspired</a></li>
+        </ul>
+    </nav>
+
+    <div class="travel-split-container">
+        <div class="left-panel">
+            <h1>Where to next?</h1>
+            <p>Start building your travel story</p>
+        </div>
+
+        <div class="right-panel">
+            <div id="step-1" class="step-content active">
+                <div class="question-capsule">Where do you want to go?</div>
+                <div class="choices-row">
+                    <button class="vibe-btn" onclick="goToStep(1, 2, 'dest', 'Beach')">Beach</button>
+                    <button class="vibe-btn" onclick="goToStep(1, 2, 'dest', 'Mountains')">Mountains</button>
+                    <button class="vibe-btn" onclick="goToStep(1, 2, 'dest', 'City')">City</button>
+                    <button class="vibe-btn" onclick="goToStep(1, 2, 'dest', 'Countryside')">Countryside</button>
+                </div>
+            </div>
+
+            <div id="step-2" class="step-content">
+                <div class="question-capsule">Who do you travel with?</div>
+                <div class="choices-row">
+                    <button class="vibe-btn" onclick="goToStep(2, 3, 'who', 'Alone')">Alone</button>
+                    <button class="vibe-btn" onclick="goToStep(2, 3, 'who', 'Friends')">Friends</button>
+                    <button class="vibe-btn" onclick="goToStep(2, 3, 'who', 'Family')">Family</button>
+                    <button class="vibe-btn" onclick="goToStep(2, 3, 'who', 'Someone special')">Someone special</button>
+                </div>
+            </div>
+
+            <div id="step-3" class="step-content">
+                <div class="question-capsule">What’s your vibe?</div>
+                <div class="choices-row">
+                    <button class="vibe-btn" onclick="goToStep(3, 4, 'vibe', 'Chill')">Chill and relax</button>
+                    <button class="vibe-btn" onclick="goToStep(3, 4, 'vibe', 'Adventure')">Adventure and fun</button>
+                    <button class="vibe-btn" onclick="goToStep(3, 4, 'vibe', 'Explore')">Explore and learn</button>
+                    <button class="vibe-btn" onclick="goToStep(3, 4, 'vibe', 'Luxury')">Luxury and comfort</button>
+                </div>
+            </div>
+
+            <div id="step-4" class="step-content">
+                <div class="question-capsule">Your perfect activity?</div>
+                <div class="choices-row">
+                    <button class="vibe-btn" onclick="goToStep(4, 5, 'act', 'Sunset')">Watching sunset</button>
+                    <button class="vibe-btn" onclick="goToStep(4, 5, 'act', 'Food')">Trying new food</button>
+                    <button class="vibe-btn" onclick="goToStep(4, 5, 'act', 'Streets')">Exploring streets</button>
+                    <button class="vibe-btn" onclick="goToStep(4, 5, 'act', 'Crazy')">Doing something crazy</button>
+                </div>
+            </div>
+
+            <div id="step-5" class="step-content">
+                <div class="question-capsule">How do you plan your trip?</div>
+                <div class="choices-row">
+                    <button class="vibe-btn" onclick="goToStep(5, 6, 'plan', 'Everything')">I plan everything</button>
+                    <button class="vibe-btn" onclick="goToStep(5, 6, 'plan', 'A little')">A little planning</button>
+                    <button class="vibe-btn" onclick="goToStep(5, 6, 'plan', 'Vibes')">No plan, just vibes</button>
+                </div>
+            </div>
+
+            <div id="step-6" class="step-content">
+                <div class="question-capsule">Pick a time:</div>
+                <div class="choices-row">
+                    <button class="vibe-btn" onclick="goToStep(6, 7, 'time', 'Sunrise')">Sunrise</button>
+                    <button class="vibe-btn" onclick="goToStep(6, 7, 'time', 'Afternoon')">Afternoon</button>
+                    <button class="vibe-btn" onclick="goToStep(6, 7, 'time', 'Night')">Night</button>
+                </div>
+            </div>
+
+            <div id="step-7" class="step-content">
+                <div class="question-capsule">Describe your dream trip in one word:</div>
+                <input type="text" id="final-word" class="main-input" placeholder="Type here...">
+            </div>
+
+            <button class="btn-create" id="final-btn" style="display:none;" onclick="finishStory()">Show Result</button>
+
+            <div class="result-box" id="result-box">
+                <h2 id="personality-title"></h2>
+                <p id="result-text"></p>
+                <p style="margin-top:20px !important; cursor:pointer; text-decoration:underline;" onclick="location.reload()">Take Quiz Again</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let quizData = {};
+
+        function goToStep(current, next, key, value) {
+            quizData[key] = value;
+            document.getElementById('step-' + current).style.display = 'none';
+            document.getElementById('step-' + next).style.display = 'flex';
+            if (next === 7) { document.getElementById('final-btn').style.display = 'block'; }
+        }
+
+        function finishStory() {
+            let word = document.getElementById('final-word').value;
+            if(!word) return alert("Please type a word!");
+            quizData.word = word;
+
+            document.getElementById('step-7').style.display = 'none';
+            document.getElementById('final-btn').style.display = 'none';
+            
+            let title = "";
+            let desc = "";
+
+            if(quizData.vibe === 'Adventure') {
+                title = "The Explorer";
+                desc = "You love discovering new places and hidden gems.";
+            } else if(quizData.vibe === 'Chill') {
+                title = "The Soul Searcher";
+                desc = "You travel to find peace and reconnect with yourself.";
+            } else if(quizData.vibe === 'Luxury') {
+                title = "The Connoisseur";
+                desc = "You appreciate the finer things in life.";
+            } else {
+                title = "The Urban Nomad";
+                desc = "You thrive in the energy of new cities.";
+            }
+
+            // عرض النتيجة في الصفحة
+            document.getElementById('personality-title').innerText = "Your Travel Personality: " + title;
+            document.getElementById('result-text').innerHTML = desc + "<br><br>Your dream trip in one word: <b>" + quizData.word + "</b>";
+            document.getElementById('result-box').classList.add('show');
+
+      // تأكدي إن الأسماء هنا تطابق المتغيرات اللي عرفتيها فوق
+let dataToSend = {
+    title: title, 
+    description: desc + " | Word: " + (quizData.word || "No Word"),
+    category: 'Travel'
+};
+
+console.log("Sending this data:", dataToSend); // هذا بيطبع لنا البيانات في الكونسول
+
+            console.log("Sending data...", dataToSend);
+
+            fetch('save_wish.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataToSend)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    console.log("Success! Data saved to wishlist_db.");
+                } else {
+                    console.error("Database Error:", data.message);
+                }
+            })
+            .catch(err => console.error("Fetch Error (Check if save_wish.php exists):", err));
+        }
+    </script>
+</body>
+</html>

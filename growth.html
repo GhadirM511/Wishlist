@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth Journey - Ghadir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 1. التصفير الموحد */
+        * { box-sizing: border-box; margin: 0 !important; padding: 0 !important; }
+        
+        body, html {      
+            height: 100%; width: 100%;
+            overflow: hidden; 
+            font-family: 'Poppins', sans-serif;
+            background: url('n3.jpg') center/cover no-repeat;
+        }
+
+        /* 2. النفيقيشن بار الموحد */
+        .navbar {
+            background-color: #d2b48c !important; 
+            padding: 15px 50px !important;
+            display: flex;
+            justify-content: flex-start !important; 
+            align-items: center;
+            position: fixed;
+            top: 0; left: 0; width: 100%; 
+            z-index: 10000;
+        }
+        .nav-links { display: flex; gap: 35px; list-style: none; }
+        .nav-links a { 
+            text-decoration: none; 
+            color: #213315 !important;
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 800; 
+            font-size: 18px !important; 
+            text-transform: uppercase;
+            transition: 0.4s ease;
+        }
+        .nav-links a:hover { color: #f6f5dc !important; transform: scale(1.1); }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding-top: 80px; 
+            text-align: center;
+        }
+
+        .header-section { 
+            text-align: center;
+            margin-bottom: 30px !important; 
+            z-index: 10;
+            animation: fadeInDown 1s ease-out;
+        }
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 5vw, 50px);
+            color: #f6f5dc; 
+        }
+        .sub-title { font-size: 18px; color: #f6f5dc; opacity: 0.8; }
+
+        /* 4. منطقة التفاعل (بدون البوكس الشفاف) */
+        .interactive-area {
+            width: 550px; 
+            min-height: 300px;
+            display: block !important;
+            position: relative !important;
+            top: 40px; /* مكان الأسئلة */
+            margin-left: 130px !important; 
+        }
+
+        .step-content {
+            display: none;
+            width: 100%;
+        }
+
+        .step-content.active { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            animation: slideInRight 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* أزرار أكشن تفاعلية */
+        .action-btn {
+            background-color: #718355; 
+            color: #f6f5dc;
+            padding: 14px 35px !important;
+            border-radius: 15px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .action-btn:hover {
+            background-color: #1a2612;
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .question-capsule {
+            color: #f6f5dc;
+            margin-bottom: 50px !important;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px; font-weight: 700;
+        }
+
+        .main-input {
+            width: 85%; padding: 18px !important; border-radius: 12px; 
+            border: 2px solid #718355 !important;
+            background: white; font-size: 17px; outline: none;
+            text-align: center;
+        }
+
+        /* 5. بوكس النتيجة (مرفوع للأعلى ومحسّن) */
+        #step-5.active {
+            margin-top: -100px !important; /* رفعت البوكس للأعلى */
+        }
+
+        .result-box {
+            background: #f6f5dc;
+            padding: 45px !important;
+            border-radius: 25px;
+            color: #1a2612;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            border-left: 10px solid #718355;
+            max-width: 90%;
+        }
+        .result-box h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 15px !important; }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-create {
+            background-color: #1a2612 !important; color: #f6f5dc !important;
+            padding: 15px 40px !important; border-radius: 50px; border: none;
+            font-weight: 700; cursor: pointer; transition: 0.4s;
+            margin-top: 25px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="abt.html">About us</a></li>
+            <li><a href="vibe.html">Add ur wish list</a></li>
+            <li><a href="ins.html">Inspired</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <div class="header-section">
+            <h1 class="main-title">Who are you becoming?</h1>
+            <p class="sub-title">Track your growth, not just your goals</p>
+        </div>
+
+        <div class="interactive-area">
+            <div id="step-1" class="step-content active">
+                <div class="question-capsule">What do you want to improve?</div>
+                <div class="choices-row">
+                    <button class="action-btn" onclick="nextStep(1, 2, 'focus', 'Mindset')">Mindset</button>
+                    <button class="action-btn" onclick="nextStep(1, 2, 'focus', 'Career')">Career</button>
+                    <button class="action-btn" onclick="nextStep(1, 2, 'focus', 'Discipline')">Discipline</button>
+                </div>
+            </div>
+
+            <div id="step-2" class="step-content">
+                <div class="question-capsule">Your biggest challenge?</div>
+                <div class="choices-row">
+                    <button class="action-btn" onclick="nextStep(2, 3, 'challenge', 'Time')">Time</button>
+                    <button class="action-btn" onclick="nextStep(2, 3, 'challenge', 'Focus')">Focus</button>
+                    <button class="action-btn" onclick="nextStep(2, 3, 'challenge', 'Consistency')">Consistency</button>
+                </div>
+            </div>
+
+            <div id="step-3" class="step-content">
+                <div class="question-capsule">One small habit to start?</div>
+                <input type="text" id="habit-input" class="main-input" placeholder="e.g. Read 10 mins daily">
+                <button class="btn-create" onclick="handleHabitInput()">Next Step ✨</button>
+            </div>
+
+            <div id="step-4" class="step-content">
+                <div class="question-capsule">How do you want to feel?</div>
+                <div class="choices-row">
+                    <button class="action-btn" onclick="nextStep(4, 5, 'feeling', 'Confident')">Confident</button>
+                    <button class="action-btn" onclick="nextStep(4, 5, 'feeling', 'Calm')">Calm</button>
+                    <button class="action-btn" onclick="nextStep(4, 5, 'feeling', 'Proud')">Proud</button>
+                </div>
+            </div>
+
+            <div id="step-5" class="step-content">
+                <div class="result-box">
+                    <h2>Your Evolving Story ✨</h2>
+                    <p id="result-text"></p>
+                    <button class="btn-create" onclick="location.reload()">Start Over</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var creativeAnswers = {};
+        function nextStep(current, next, key, value) {
+            if (key) creativeAnswers[key] = value;
+            document.getElementById('step-' + current).style.display = 'none';
+            const nextStepDiv = document.getElementById('step-' + next);
+            nextStepDiv.style.display = 'flex';
+            nextStepDiv.classList.add('active');
+            if(next === 5) displayFinalResult();
+        }
+        function handleHabitInput() {
+            var val = document.getElementById('habit-input').value;
+            if(!val) return alert("Write your habit first!");
+            nextStep(3, 4, 'habit', val);
+        }
+        function displayFinalResult() {
+            const resultParagraph = document.getElementById('result-text');
+            resultParagraph.innerHTML = "By focusing on <b>" + creativeAnswers.focus + "</b>, you are turning your challenge of <b>" + creativeAnswers.challenge + "</b> into strength. Your commitment to <b>\"" + creativeAnswers.habit + "\"</b> will lead you to feel <b>" + creativeAnswers.feeling + "</b>.";
+        }
+    </script>
+</body>
+</html> 

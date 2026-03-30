@@ -1,0 +1,76 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body, html { height: 100%; font-family: 'Roboto', sans-serif; overflow: hidden; }
+
+/* الخلفية المخططة */
+.creativity-container {
+    height: 100vh; width: 100%;
+    background-image: url('backg.jpg'); 
+    background-size: cover; background-position: center;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding-top: 60px;
+}
+
+/* النفيقيشن بار */
+.navbar {
+    background-color: #f6f5dc; padding: 20px;
+    position: fixed; top: 0; width: 100%; display: flex; justify-content: center; z-index: 100;
+}
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a { text-decoration: none; color: #1a2612; font-weight: 800; font-size: 15px; }
+
+/* العنوان فوق الكرت */
+.page-title {
+    font-family: 'Playfair Display', serif;
+    color: #f6f5dc; font-size: 40px; font-weight: 800;
+    margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* الكرت (نفس مقاس الهيرو بس بلمسة Creativity) */
+.creativity-card {
+    background-color: #f6f5dc;
+    border-radius: 40px;
+    width: 90%; max-width: 600px;
+    padding: 60px 40px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    position: relative; text-align: center;
+}
+
+/* الدوائر الخضراء */
+.circles .circle {
+    position: absolute; top: 25px; width: 22px; height: 22px;
+    background-color: #8da16c; border-radius: 50%;
+}
+.circle.left { left: 30px; } .circle.right { right: 30px; }
+
+/* الـ Input الكبير */
+.input-section input {
+    width: 100%; padding: 20px;
+    border-radius: 15px; border: 2.5px solid #8da16c;
+    background: transparent; font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700; color: #1a2612;
+    outline: none; margin-bottom: 25px;
+}
+
+/* كروت الاقتراحات الصغيرة */
+.suggestions {
+    display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 35px;
+}
+.suggestions button {
+    padding: 10px 18px; border-radius: 12px; border: none;
+    background-color: #d8decb; color: #1a2612;
+    font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.3s;
+}
+.suggestions button:hover { background-color: #8da16c; color: white; }
+
+/* زر الإضافة */
+.btn-add {
+    background-color: #8da16c; color: white;
+    padding: 15px 40px; border-radius: 50px; border: none;
+    font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.3s;
+}
+.btn-add:hover { transform: scale(1.05); }
+
+.quote {
+    margin-top: 25px; font-family: 'Playfair Display', serif;
+    font-style: italic; color: #8da16c; font-size: 14px; font-weight: 700;
+}
