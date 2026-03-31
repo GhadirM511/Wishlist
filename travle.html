@@ -142,82 +142,78 @@
             </div>
         </div>
     </div>
-<script type="module">
-    // 1. استيراد المكتبات من Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-    // 2. إعدادات مشروعك (wishlistdb8)
-    const firebaseConfig = {
-        apiKey: "AIzaSyDsmJ-ewhUq84_fYIXNHwM4LW8aTcE5yYo",
-        authDomain: "wishlistdb8.firebaseapp.com",
-        databaseURL: "https://wishlistdb8-default-rtdb.firebaseio.com",
-        projectId: "wishlistdb8",
-        storageBucket: "wishlistdb8.firebasestorage.app",
-        messagingSenderId: "31021571665",
-        appId: "1:31021571665:web:2aa36abfe129864ad3e270"
-    };
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-    // 3. تشغيل Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+        const firebaseConfig = {
+            apiKey: "AIzaSyDsmJ-ewhUq84_fYIXNHwM4LW8aTcE5yYo",
+            authDomain: "wishlistdb8.firebaseapp.com",
+            databaseURL: "https://wishlistdb8-default-rtdb.firebaseio.com",
+            projectId: "wishlistdb8",
+            storageBucket: "wishlistdb8.firebasestorage.app",
+            messagingSenderId: "31021571665",
+            appId: "1:31021571665:web:2aa36abfe129864ad3e270"
+        };
 
-    let quizData = {};
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-    // جعل الدوال متاحة للمتصفح (بسبب استخدام type="module")
-    window.goToStep = function(current, next, key, value) {
-        quizData[key] = value;
-        document.getElementById('step-' + current).style.display = 'none';
-        document.getElementById('step-' + next).style.display = 'flex';
-        if (next === 7) { document.getElementById('final-btn').style.display = 'block'; }
-    }
+        let quizData = {};
 
-    window.finishStory = function() {
-        let word = document.getElementById('final-word').value;
-        if(!word) return alert("Please type a word!");
-        quizData.word = word;
-
-        document.getElementById('step-7').style.display = 'none';
-        document.getElementById('final-btn').style.display = 'none';
-        
-        let title = "";
-        let desc = "";
-
-        if(quizData.vibe === 'Adventure') {
-            title = "The Explorer";
-            desc = "You love discovering new places and hidden gems.";
-        } else if(quizData.vibe === 'Chill') {
-            title = "The Soul Searcher";
-            desc = "You travel to find peace and reconnect with yourself.";
-        } else if(quizData.vibe === 'Luxury') {
-            title = "The Connoisseur";
-            desc = "You appreciate the finer things in life.";
-        } else {
-            title = "The Urban Nomad";
-            desc = "You thrive in the energy of new cities.";
+        // جعل الدوال متاحة عالمياً للأزرار
+        window.goToStep = function(current, next, key, value) {
+            quizData[key] = value;
+            document.getElementById('step-' + current).style.display = 'none';
+            document.getElementById('step-' + next).style.display = 'flex';
+            if (next === 7) { document.getElementById('final-btn').style.display = 'block'; }
         }
 
-        // أ- عرض النتيجة للمستخدم
-        document.getElementById('personality-title').innerText = "Your Travel Personality: " + title;
-        document.getElementById('result-text').innerHTML = desc + "<br><br>Your dream trip in one word: <b>" + quizData.word + "</b>";
-        document.getElementById('result-box').classList.add('show');
+        window.finishStory = function() {
+            let word = document.getElementById('final-word').value;
+            if(!word) return alert("Please type a word!");
+            quizData.word = word;
 
-        // ب- إرسال البيانات لـ Firebase (الجزء الأهم!)
-        const wishlistRef = ref(db, 'wishlist_items');
-        const newItemRef = push(wishlistRef);
-        
-        set(newItemRef, {
-            category: "Travel",
-            personality: title,
-            dream_word: quizData.word,
-            full_data: quizData, // يخزن كل إجابات الـ Quiz (الوجهة، المرافق، المود.. إلخ)
-            date: new Date().toLocaleString()
-        }).then(() => {
-            console.log("Saved to Firebase successfully!");
-        }).catch((error) => {
-            console.error("Firebase Error: ", error);
-        });
-    }
-</script>
+            document.getElementById('step-7').style.display = 'none';
+            document.getElementById('final-btn').style.display = 'none';
+            
+            let title = "";
+            let desc = "";
+
+            if(quizData.vibe === 'Adventure') {
+                title = "The Explorer";
+                desc = "You love discovering new places and hidden gems.";
+            } else if(quizData.vibe === 'Chill') {
+                title = "The Soul Searcher";
+                desc = "You travel to find peace and reconnect with yourself.";
+            } else if(quizData.vibe === 'Luxury') {
+                title = "The Connoisseur";
+                desc = "You appreciate the finer things in life.";
+            } else {
+                title = "The Urban Nomad";
+                desc = "You thrive in the energy of new cities.";
+            }
+
+            // عرض النتيجة للمستخدم
+            document.getElementById('personality-title').innerText = "Your Travel Personality: " + title;
+            document.getElementById('result-text').innerHTML = desc + "<br><br>Your dream trip in one word: <b>" + quizData.word + "</b>";
+            document.getElementById('result-box').classList.add('show');
+
+            // إرسال البيانات لـ Firebase
+            const quizRef = ref(db, 'quiz_results');
+            set(push(quizRef), {
+                category: "Travel",
+                personality: title,
+                user_word: quizData.word,
+                selections: quizData,
+                timestamp: new Date().toLocaleString()
+            }).then(() => {
+                console.log("Quiz saved successfully to Firebase!");
+            }).catch((err) => {
+                console.error("Firebase Error:", err);
+            });
+        }
+    </script>
 </body>
 </html>
